@@ -93,3 +93,47 @@ legend('Location','best','Original response data','Initial slope line',...
 title('First Order Step Response 1V Offset Analysis','FontSize',14);
 xlabel('Time (ms)','FontSize',12);
 ylabel('Voltage (V)','FontSize',12);
+
+%% Theoretical Simulation
+R = 11.1e3;
+C = 58.77e-9;
+sys = tf(1,[R*C 1]);
+
+opt = stepDataOptions('InputOffset',-2,'StepAmplitude',4);
+
+[V,t] = step(sys,opt);
+
+% Find tau
+for i = 1:length(V)
+    if (V(i) >= 0.632*(V(end)-V(1))+V(1))
+        tauX = t(i);
+        tauY = V(i);
+        break;
+    end
+end
+
+figure;
+hold on;
+grid on;
+xlim([-1 5]);
+ylim([-2.5 2.5]);
+plot(t*1e3,V);
+plot(tauX*1e3,tauY,'*','markers',14);
+plot([-1 5],[tauY tauY],'k--');
+title('Simulated Response of the First Order Circuit','FontSize',14);
+xlabel('Time (ms)','FontSize',12);
+ylabel('Voltage (V)','FontSize',12);
+text(2,-0.5,['Tau = ',num2str(tauX*1e3),' ms']);
+text(2,-0.8,['Tau Voltage = ',num2str(tauY),' V']);
+
+figure;
+hold on;
+grid on;
+xlim([-1 5]);
+ylim([-2.5 2.5]);
+plot(t*1e3,V);
+plot((responsedata1(:,1)-threshold1)*1e3,responsedata1(:,2),'-.');
+legend('Location','best','Theoretical Simulation','Experimental Result');
+title('Comparing Theoretical and Experimental Step Response','FontSize',14);
+xlabel('Time (ms)','FontSize',12);
+ylabel('VOltage (V)','FontSize',12);
