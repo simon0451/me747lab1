@@ -1,4 +1,4 @@
-function [tauX1,tauX2,tauY1,tauY2,tauPer1,tauPer2] = ...
+function [tauX1,tauX2,tauY1,tauY2,tauPer1,tauPer2,p] = ...
     FindTaus(responsedata,threshold,responseFinalValue,responseInitialValue)
     %% Calculate tau using initial slope method
     
@@ -26,11 +26,13 @@ function [tauX1,tauX2,tauY1,tauY2,tauPer1,tauPer2] = ...
             break;
         end
     end
-
+    
     % check for the tau percentage
     tauPer1 = (tauY1-responseInitialValue)/(responseFinalValue-responseInitialValue);
 
     %% Calculate tau using the 63.2% method
+    % Finds the 63.2% of final value point, then scan the data until that
+    % point is reached.
     tauY2 = (responseFinalValue-responseInitialValue)*0.632 + responseInitialValue;
     for i = indEnd:size(responsedata,1)
         if (responsedata(i,2) >= tauY2)
@@ -38,7 +40,7 @@ function [tauX1,tauX2,tauY1,tauY2,tauPer1,tauPer2] = ...
             break;
         end
     end
-
+    
     % check for the tau percentage
     tauPer2 = (tauY2-responseInitialValue)/(responseFinalValue-responseInitialValue);
     
