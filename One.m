@@ -6,6 +6,7 @@ filename1 = '1.1.5 Data.lvm';
 output1 = importdata(filename1,'\t',33);
 responsedata1 = output1.data(:,3:4);
 
+%% a)
 % Output 1 from 1.1.5
 % Observed from data, t = -3.13e-7 is the threshold
 % Takes first 5 values to find the slope.
@@ -53,6 +54,7 @@ filename2 = '1.1.6 Data.lvm';
 output2 = importdata(filename2,'\t',33);
 responsedata2 = output2.data(:,3:4);
 
+%% a)
 % Output 1 from 1.1.6
 % observed from data, t = 2.717e-7 is the threshold
 % Takes first 5 values to find the slope.
@@ -94,7 +96,7 @@ title('First Order Step Response 1V Offset Analysis','FontSize',14);
 xlabel('Time (ms)','FontSize',12);
 ylabel('Voltage (V)','FontSize',12);
 
-%% Theoretical Simulation
+%% e) Theoretical Simulation
 R = 11.1e3;
 C = 58.77e-9;
 sys = tf(1,[R*C 1]); % transfer function
@@ -140,7 +142,7 @@ title('Comparing Theoretical and Experimental Step Response','FontSize',14);
 xlabel('Time (ms)','FontSize',12);
 ylabel('VOltage (V)','FontSize',12);
 
-%% Bode Plots
+%% 1.2 b) Bode Plots
 % source data
 omega_i = [10,30,100,200,230,240,250,260,270,500,1000,5000,10000];
 dB = [-0.087959128,-0.15451799,-0.753782462,-2.289813348,-2.878912935,...
