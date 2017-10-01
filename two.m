@@ -48,11 +48,14 @@ opt1 = stepDataOptions('InputOffset',-2,'StepAmplitude',4);
 figure(2);
 hold on;
 grid on;
+xlim([-0.0025 0.035]);
+ylim([-2 6]);
 plot(t1,V1,'--');
 plot(responsedata1(:,1),responsedata1(:,2));
 title('Simulated Step Response of the Second Order Circuit','FontSize',14);
 xlabel('Time (ms)','FontSize',12);
 ylabel('Voltage (V)','FontSize',12);
+legend('Location','best','Simulated Response','Experimental Response');
 
 %% 2.2 a) - done in excel sheet
 
@@ -78,6 +81,7 @@ hold on;
 grid on;
 semilogx(omega_i,dB,'b');
 xlim([10 10000]);
+ylim([-60 30]);
 ylabel('Amplitude Ratio (dB)','FontSize',12);
 title('Simulated and Experimental Bode Response Plot','FontSize',14);
 legend('Location','best','Simulated Bode Plot','Experimental Bode Plot');
@@ -92,3 +96,8 @@ ylim([-180 0]);
 xlabel('Frequency (Hz)','FontSize',12);
 ylabel('Phase Shift (deg)','FontSize',12);
 legend('Location','best','Simulated Bode Plot','Experimental Bode Plot');
+
+%% c)
+[maxPeak,maxInd] = max(magdb); % maximum point on the measured bode plot
+wnFromBode = wout(maxInd)*2*pi; % frequency where maxPeak happened
+zetaExp = 1/(2*maxPeak); % Approximate height = 1/2zeta
