@@ -21,18 +21,18 @@ ylabel('Voltage (V)','FontSize',12);
 legend('Location','best','Data','Peaks');
 
 % Log decrement method
-n = 5; % next peak is 5 periods away
-sigma = (1/n)*log(maxtab(1,2)/maxtab(6,2));
-zeta = 1/sqrt(1+(2*pi/sigma)^2); % the damping ratio
+n = 2; % next peak is 5 periods away
+sigma = (1/(n-1))*log(maxtab(1,2)/maxtab(2,2));
+zeta = sigma/sqrt(4*pi^2+(sigma)^2); % the damping ratio
 T = diff(responsedata1(maxtab(:,1),1));
-T = T(2); % The first damped period
+T = T(1); % The first damped period
 wd = 2*pi/T; % The damped frequency in rad/s -> 2pi rad/cyc div s/cyc
 wn = wd/(sqrt(1-zeta^2)); % Natural frequency in rad/s
 wnHz = wn/(2*pi); % Natural frequency in Hz -> rad/s div 2pi rad/cyc
 
 %% c)
 % From derived differential equation, LC = 1/wn^2, L/R = 2*zeta/wn
-R = 55; % R = 55 ohms measured in lab
+R = 20200; % R = 20.2k ohms measured in lab
 L = R*2*zeta/wn; % result = 1.3 mH
 C = 1/wn^2/L; % result = 179.21 muF
 
@@ -74,14 +74,14 @@ wout = wout/(2*pi); % convert from rad/s to Hz
 % convert mag1 to decibels
 magdb = 20*log10(mag);
 
-figure(4);
+figure(3);
 subplot(2,1,1);
 semilogx(wout,magdb,'kO');
 hold on;
 grid on;
 semilogx(omega_i,dB,'b');
 xlim([10 10000]);
-ylim([-60 30]);
+ylim([-40 25]);
 ylabel('Amplitude Ratio (dB)','FontSize',12);
 title('Simulated and Experimental Bode Response Plot','FontSize',14);
 legend('Location','best','Simulated Bode Plot','Experimental Bode Plot');
