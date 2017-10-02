@@ -49,7 +49,17 @@ mag1 = squeeze(mag); %force array
 TheoreticalMagnitudeAR1 = 20*log10(mag1); %converting from absolute magnitude to decibels
 theoreticalFrequency1 = theoreticalFrequency1/(2*pi); %convert from rad/s to Hz
 
-
+%1/Tau (the time constant) occurs at the point where phase is 45 degrees
+%omega is ~330 Hz
+locationMap = find(phaseAnglePS1<=-45); %finding the indices of phase angles that meet the condition <= -45 degrees
+freqInd = locationMap(1); %finding the index of the first value meeting the <= -45 degrees condition
+omega1 = frequencyPS1(freqInd); %Hz, 1/tau - the natural frequency of the first order system
+tau1 = 1/(omega1*6.28); %seconds, the time constant of the first order system (multiplied by 6.28 to convert to radians per second
+disp('Circuit 1 time constant (seconds):')
+disp(tau1)
+C1 = 1/(R*omega1*6.28); %Farrads, the calculated capacitance of the first order system using data from LabView
+disp('Circuit 1 capacitance (Farrads):')
+disp(C1)
 
 figure(1)
 subplot(2,1,1)
@@ -59,12 +69,22 @@ xlabel('Frequency (Hz)')
 ylabel('Magnitude (dB)')
 legend('Experimental Values','Theoretical Values','location','southwest')
 grid on
+xmin = 0;
+xmax = 100000;
+ymin = -40;
+ymax = 5;
+axis ([xmin xmax ymin ymax])
 subplot(2,1,2)
 semilogx(frequencyPS1,phaseAnglePS1,theoreticalFrequency1,theoreticalPhaseAngle1,'o')
 xlabel('Frequency (Hz)')
 ylabel('Phase Angle (°)')
 legend('Experimental Values','Theoretical Values','location','southwest')
 grid on
+xmin = 0;
+xmax = 100000;
+ymin = -100;
+ymax = 10;
+axis ([xmin xmax ymin ymax])
 
 
 %% Frequency Response of a Second Order System Using LabView
