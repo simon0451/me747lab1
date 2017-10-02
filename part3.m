@@ -50,7 +50,7 @@ TheoreticalMagnitudeAR1 = 20*log10(mag1); %converting from absolute magnitude to
 theoreticalFrequency1 = theoreticalFrequency1/(2*pi); %convert from rad/s to Hz
 
 %1/Tau (the time constant) occurs at the point where phase is 45 degrees
-%omega is ~330 Hz
+%omega is ~250 Hz
 locationMap = find(phaseAnglePS1<=-45); %finding the indices of phase angles that meet the condition <= -45 degrees
 freqInd = locationMap(1); %finding the index of the first value meeting the <= -45 degrees condition
 omega1 = frequencyPS1(freqInd); %Hz, 1/tau - the natural frequency of the first order system
@@ -88,6 +88,15 @@ axis ([xmin xmax ymin ymax])
 
 
 %% Frequency Response of a Second Order System Using LabView
+
+peakdB = max(magnitudeAR2); %finding the magnitude of the peak
+zeta = 1/(peakdB*2); %calculating the damping ratio given the peak magnitude
+disp('Circuit 2 damping ratio:')
+disp(zeta)
+
+
+
+
 figure(2)
 subplot(2,1,1)
 semilogx(frequencyAR2,magnitudeAR2)
