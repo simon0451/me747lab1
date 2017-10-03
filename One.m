@@ -183,3 +183,10 @@ ylim([-90 0]);
 xlabel('Frequency (Hz)','FontSize',12);
 ylabel('Phase Shift (deg)','FontSize',12);
 legend('Location','best','Simulated Bode Plot','Experimental Bode Plot');
+%% 1.2 c)
+breakfrequency=250; %Hz
+tauC=1/(2*pi*breakfrequency);
+CapC=tauC/R;
+%% 1.2 e)
+[magE,phaseE,woutE]=bode(sys,250*2*pi);
+magdbE = 20*log10(magE);
