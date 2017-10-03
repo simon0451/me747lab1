@@ -140,7 +140,7 @@ plot((responsedata1(:,1)-threshold1)*1e3,responsedata1(:,2),'-.');
 legend('Location','best','Theoretical Simulation','Experimental Result');
 title('Comparing Theoretical and Experimental Step Response','FontSize',14);
 xlabel('Time (ms)','FontSize',12);
-ylabel('VOltage (V)','FontSize',12);
+ylabel('Voltage (V)','FontSize',12);
 
 %% 1.2 b) Bode Plots
 % source data
