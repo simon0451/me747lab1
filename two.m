@@ -15,13 +15,13 @@ grid on;
 hold on;
 plot(responsedata1(:,1),responsedata1(:,2));
 plot(responsedata1(maxtab(:,1),1),maxtab(:,2),'O');
-title('Experimental Step Response Data','FontSize',14);
+title('Experimental 0V Offset Step Response Data','FontSize',14);
 xlabel('Time (s)','FontSize',12);
 ylabel('Voltage (V)','FontSize',12);
 legend('Location','best','Data','Peaks');
 
 % Log decrement method
-n = 2; % next peak is 5 periods away
+n = 2; % next peak is 2 periods away
 sigma = (1/(n-1))*log(maxtab(1,2)/maxtab(2,2));
 zeta = sigma/sqrt(4*pi^2+(sigma)^2); % the damping ratio
 T = diff(responsedata1(maxtab(:,1),1));
@@ -79,6 +79,30 @@ xlabel('Time (ms)','FontSize',12);
 ylabel('Voltage (V)','FontSize',12);
 legend('Location','best','Simulated Response','Experimental Response');
 
+% find peaks
+[maxtab2,mintab2] = peakdet(responsedata2(:,2),0.05);
+
+% check peaks
+figure(4);
+grid on;
+hold on;
+plot(responsedata2(:,1),responsedata2(:,2));
+plot(responsedata2(maxtab2(:,1),1),maxtab2(:,2),'O');
+title('Experimental 1V Offset Step Response Data','FontSize',14);
+xlabel('Time (s)','FontSize',12);
+ylabel('Voltage (V)','FontSize',12);
+legend('Location','best','Data','Peaks');
+
+% Log decrement method
+n = 2; % next peak is 2 periods away
+sigma2 = (1/(n-1))*log(maxtab2(1,2)/maxtab2(2,2));
+zeta2 = sigma2/sqrt(4*pi^2+(sigma2)^2); % the damping ratio
+T2 = diff(responsedata2(maxtab2(:,1),1));
+T2 = T2(1); % The first damped period
+wd2 = 2*pi/T2; % The damped frequency in rad/s -> 2pi rad/cyc div s/cyc
+wn2 = wd2/(sqrt(1-zeta2^2)); % Natural frequency in rad/s
+wnHz2 = wn2/(2*pi); % Natural frequency in Hz -> rad/s div 2pi rad/cyc
+
 %% 2.2 a) - done in excel sheet
 
 %% b)
@@ -96,7 +120,7 @@ wout = wout/(2*pi); % convert from rad/s to Hz
 % convert mag1 to decibels
 magdb = 20*log10(mag);
 
-figure(4);
+figure(5);
 subplot(2,1,1);
 semilogx(wout,magdb,'kO');
 hold on;
