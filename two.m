@@ -147,3 +147,7 @@ legend('Location','best','Simulated Bode Plot','Experimental Bode Plot');
 [maxPeak,maxInd] = max(magdb); % maximum point on the measured bode plot
 wnFromBode = wout(maxInd)*2*pi; % frequency where maxPeak happened
 zetaExp = 1/(2*maxPeak); % Approximate height = 1/2zeta
+%% d)
+% From derived differential equation, LC = 1/wn^2, L/R = 2*zeta/wn
+LFromBode = R*2*zetaExp/wnFromBode; % 
+CFromBode = 1/wnFromBode^2/LFromBode; % 
