@@ -52,7 +52,29 @@ xlim([-0.0025 0.035]);
 ylim([-2 6]);
 plot(t1,V1,'--');
 plot(responsedata1(:,1),responsedata1(:,2));
-title('Simulated Step Response of the Second Order Circuit','FontSize',14);
+title('Simulated 0V Offset Step Response of the Second Order Circuit','FontSize',14);
+xlabel('Time (ms)','FontSize',12);
+ylabel('Voltage (V)','FontSize',12);
+legend('Location','best','Simulated Response','Experimental Response');
+
+%% d) second offset
+filename2 = '2.1.5 Data.lvm';
+output2 = importdata(filename2,'\t',33);
+responsedata2 = output2.data(:,3:4);
+% creates the step offset conditions
+opt2 = stepDataOptions('InputOffset',-3,'StepAmplitude',8);
+
+% step response
+[V2,t2] = step(sys,opt2);
+
+figure(3);
+hold on;
+grid on;
+xlim([-0.0025 0.035]);
+ylim([-4 12]);
+plot(t2,V2,'--');
+plot(responsedata2(:,1),responsedata2(:,2));
+title('Simulated 1V Offset Step Response of the Second Order Circuit','FontSize',14);
 xlabel('Time (ms)','FontSize',12);
 ylabel('Voltage (V)','FontSize',12);
 legend('Location','best','Simulated Response','Experimental Response');
@@ -74,7 +96,7 @@ wout = wout/(2*pi); % convert from rad/s to Hz
 % convert mag1 to decibels
 magdb = 20*log10(mag);
 
-figure(3);
+figure(4);
 subplot(2,1,1);
 semilogx(wout,magdb,'kO');
 hold on;
